@@ -5,8 +5,8 @@ package echo
 
 import (
 	"bytes"
-	"code.byted.org/gopkg/thrift"
 	"fmt"
+	"code.byted.org/gopkg/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -85,16 +85,16 @@ func (p *EchoServiceClient) recvHi() (err error) {
 		return
 	}
 	if mTypeId == thrift.EXCEPTION {
-		error2 := thrift.NewTApplicationException(thrift.UNKNOWN_APPLICATION_EXCEPTION, "Unknown Exception")
-		var error3 error
-		error3, err = error2.Read(iprot)
+		error3 := thrift.NewTApplicationException(thrift.UNKNOWN_APPLICATION_EXCEPTION, "Unknown Exception")
+		var error4 error
+		error4, err = error3.Read(iprot)
 		if err != nil {
 			return
 		}
 		if err = iprot.ReadMessageEnd(); err != nil {
 			return
 		}
-		err = error3
+		err = error4
 		return
 	}
 	if p.SeqId != seqId {
@@ -153,16 +153,16 @@ func (p *EchoServiceClient) recvDo() (value *EchoRsp, err error) {
 		return
 	}
 	if mTypeId == thrift.EXCEPTION {
-		error4 := thrift.NewTApplicationException(thrift.UNKNOWN_APPLICATION_EXCEPTION, "Unknown Exception")
-		var error5 error
-		error5, err = error4.Read(iprot)
+		error5 := thrift.NewTApplicationException(thrift.UNKNOWN_APPLICATION_EXCEPTION, "Unknown Exception")
+		var error6 error
+		error6, err = error5.Read(iprot)
 		if err != nil {
 			return
 		}
 		if err = iprot.ReadMessageEnd(); err != nil {
 			return
 		}
-		err = error5
+		err = error6
 		return
 	}
 	if p.SeqId != seqId {
@@ -200,10 +200,10 @@ func (p *EchoServiceProcessor) ProcessorMap() map[string]thrift.TProcessorFuncti
 
 func NewEchoServiceProcessor(handler EchoService) *EchoServiceProcessor {
 
-	self6 := &EchoServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
-	self6.processorMap["Hi"] = &echoServiceProcessorHi{handler: handler}
-	self6.processorMap["Do"] = &echoServiceProcessorDo{handler: handler}
-	return self6
+	self7 := &EchoServiceProcessor{handler: handler, processorMap: make(map[string]thrift.TProcessorFunction)}
+	self7.processorMap["Hi"] = &echoServiceProcessorHi{handler: handler}
+	self7.processorMap["Do"] = &echoServiceProcessorDo{handler: handler}
+	return self7
 }
 
 func (p *EchoServiceProcessor) Process(iprot, oprot thrift.TProtocol) (success bool, err thrift.TException) {
@@ -216,12 +216,12 @@ func (p *EchoServiceProcessor) Process(iprot, oprot thrift.TProtocol) (success b
 	}
 	iprot.Skip(thrift.STRUCT)
 	iprot.ReadMessageEnd()
-	x7 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
+	x8 := thrift.NewTApplicationException(thrift.UNKNOWN_METHOD, "Unknown function "+name)
 	oprot.WriteMessageBegin(name, thrift.EXCEPTION, seqId)
-	x7.Write(oprot)
+	x8.Write(oprot)
 	oprot.WriteMessageEnd()
 	oprot.Flush()
-	return false, x7
+	return false, x8
 
 }
 

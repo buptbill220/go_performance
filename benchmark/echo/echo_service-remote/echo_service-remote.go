@@ -4,10 +4,10 @@
 package main
 
 import (
-	"code.byted.org/gopkg/thrift"
 	"echo"
 	"flag"
 	"fmt"
+	"code.byted.org/gopkg/thrift"
 	"math"
 	"net"
 	"net/url"
@@ -129,19 +129,19 @@ func main() {
 			fmt.Fprintln(os.Stderr, "Do requires 1 args")
 			flag.Usage()
 		}
-		arg8 := flag.Arg(1)
-		mbTrans9 := thrift.NewTMemoryBufferLen(len(arg8))
-		defer mbTrans9.Close()
-		_, err10 := mbTrans9.WriteString(arg8)
-		if err10 != nil {
+		arg9 := flag.Arg(1)
+		mbTrans10 := thrift.NewTMemoryBufferLen(len(arg9))
+		defer mbTrans10.Close()
+		_, err11 := mbTrans10.WriteString(arg9)
+		if err11 != nil {
 			Usage()
 			return
 		}
-		factory11 := thrift.NewTSimpleJSONProtocolFactory()
-		jsProt12 := factory11.GetProtocol(mbTrans9)
+		factory12 := thrift.NewTSimpleJSONProtocolFactory()
+		jsProt13 := factory12.GetProtocol(mbTrans10)
 		argvalue0 := echo.NewEchoReq()
-		err13 := argvalue0.Read(jsProt12)
-		if err13 != nil {
+		err14 := argvalue0.Read(jsProt13)
+		if err14 != nil {
 			Usage()
 			return
 		}

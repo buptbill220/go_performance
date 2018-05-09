@@ -5,8 +5,8 @@ package echo
 
 import (
 	"bytes"
-	"code.byted.org/gopkg/thrift"
 	"fmt"
+	"code.byted.org/gopkg/thrift"
 )
 
 // (needed to ensure safety because of naive import list construction.)
@@ -21,6 +21,9 @@ type EchoReq struct {
 	StrDat string             `thrift:"str_dat,2" json:"str_dat"`
 	BinDat []byte             `thrift:"bin_dat,3" json:"bin_dat"`
 	MDat   map[string]float64 `thrift:"m_dat,4" json:"m_dat"`
+	T64    int64              `thrift:"t64,5" json:"t64"`
+	Li32   []int32            `thrift:"li32,6" json:"li32"`
+	T16    int16              `thrift:"t16,7" json:"t16"`
 }
 
 func NewEchoReq() *EchoReq {
@@ -41,6 +44,18 @@ func (p *EchoReq) GetBinDat() []byte {
 
 func (p *EchoReq) GetMDat() map[string]float64 {
 	return p.MDat
+}
+
+func (p *EchoReq) GetT64() int64 {
+	return p.T64
+}
+
+func (p *EchoReq) GetLi32() []int32 {
+	return p.Li32
+}
+
+func (p *EchoReq) GetT16() int16 {
+	return p.T16
 }
 func (p *EchoReq) Read(iprot thrift.TProtocol) error {
 	if _, err := iprot.ReadStructBegin(); err != nil {
@@ -69,6 +84,18 @@ func (p *EchoReq) Read(iprot thrift.TProtocol) error {
 			}
 		case 4:
 			if err := p.ReadField4(iprot); err != nil {
+				return err
+			}
+		case 5:
+			if err := p.ReadField5(iprot); err != nil {
+				return err
+			}
+		case 6:
+			if err := p.ReadField6(iprot); err != nil {
+				return err
+			}
+		case 7:
+			if err := p.ReadField7(iprot); err != nil {
 				return err
 			}
 		default:
@@ -141,6 +168,46 @@ func (p *EchoReq) ReadField4(iprot thrift.TProtocol) error {
 	return nil
 }
 
+func (p *EchoReq) ReadField5(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI64(); err != nil {
+		return fmt.Errorf("error reading field 5: %s", err)
+	} else {
+		p.T64 = v
+	}
+	return nil
+}
+
+func (p *EchoReq) ReadField6(iprot thrift.TProtocol) error {
+	_, size, err := iprot.ReadListBegin()
+	if err != nil {
+		return fmt.Errorf("error reading list begin: %s", err)
+	}
+	tSlice := make([]int32, 0, size)
+	p.Li32 = tSlice
+	for i := 0; i < size; i++ {
+		var _elem2 int32
+		if v, err := iprot.ReadI32(); err != nil {
+			return fmt.Errorf("error reading field 0: %s", err)
+		} else {
+			_elem2 = v
+		}
+		p.Li32 = append(p.Li32, _elem2)
+	}
+	if err := iprot.ReadListEnd(); err != nil {
+		return fmt.Errorf("error reading list end: %s", err)
+	}
+	return nil
+}
+
+func (p *EchoReq) ReadField7(iprot thrift.TProtocol) error {
+	if v, err := iprot.ReadI16(); err != nil {
+		return fmt.Errorf("error reading field 7: %s", err)
+	} else {
+		p.T16 = v
+	}
+	return nil
+}
+
 func (p *EchoReq) Write(oprot thrift.TProtocol) error {
 	if err := oprot.WriteStructBegin("EchoReq"); err != nil {
 		return fmt.Errorf("%T write struct begin error: %s", p, err)
@@ -155,6 +222,15 @@ func (p *EchoReq) Write(oprot thrift.TProtocol) error {
 		return err
 	}
 	if err := p.writeField4(oprot); err != nil {
+		return err
+	}
+	if err := p.writeField5(oprot); err != nil {
+		return err
+	}
+	if err := p.writeField6(oprot); err != nil {
+		return err
+	}
+	if err := p.writeField7(oprot); err != nil {
 		return err
 	}
 	if err := oprot.WriteFieldStop(); err != nil {
@@ -225,6 +301,53 @@ func (p *EchoReq) writeField4(oprot thrift.TProtocol) (err error) {
 	}
 	if err := oprot.WriteFieldEnd(); err != nil {
 		return fmt.Errorf("%T write field end error 4:m_dat: %s", p, err)
+	}
+	return err
+}
+
+func (p *EchoReq) writeField5(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("t64", thrift.I64, 5); err != nil {
+		return fmt.Errorf("%T write field begin error 5:t64: %s", p, err)
+	}
+	if err := oprot.WriteI64(int64(p.T64)); err != nil {
+		return fmt.Errorf("%T.t64 (5) field write error: %s", p, err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return fmt.Errorf("%T write field end error 5:t64: %s", p, err)
+	}
+	return err
+}
+
+func (p *EchoReq) writeField6(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("li32", thrift.LIST, 6); err != nil {
+		return fmt.Errorf("%T write field begin error 6:li32: %s", p, err)
+	}
+	if err := oprot.WriteListBegin(thrift.I32, len(p.Li32)); err != nil {
+		return fmt.Errorf("error writing list begin: %s", err)
+	}
+	for _, v := range p.Li32 {
+		if err := oprot.WriteI32(int32(v)); err != nil {
+			return fmt.Errorf("%T. (0) field write error: %s", p, err)
+		}
+	}
+	if err := oprot.WriteListEnd(); err != nil {
+		return fmt.Errorf("error writing list end: %s", err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return fmt.Errorf("%T write field end error 6:li32: %s", p, err)
+	}
+	return err
+}
+
+func (p *EchoReq) writeField7(oprot thrift.TProtocol) (err error) {
+	if err := oprot.WriteFieldBegin("t16", thrift.I16, 7); err != nil {
+		return fmt.Errorf("%T write field begin error 7:t16: %s", p, err)
+	}
+	if err := oprot.WriteI16(int16(p.T16)); err != nil {
+		return fmt.Errorf("%T.t16 (7) field write error: %s", p, err)
+	}
+	if err := oprot.WriteFieldEnd(); err != nil {
+		return fmt.Errorf("%T write field end error 7:t16: %s", p, err)
 	}
 	return err
 }
