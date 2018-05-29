@@ -1,15 +1,10 @@
-# go_performance
-some benchmark for go programing language (with product env)
-
-BenchmarkApacheThrift-4         	 1000000	      1384 ns/op
-
-BenchmarkOPTThrift-4            	 3000000	       545 ns/op
-
-BenchmarkOPT11111Thrift-4       	 3000000	       483 ns/op
-
-BenchmarkApacheThriftRead-4     	 1000000	      1952 ns/op
-
-BenchmarkOPTThriftRead-4        	 2000000	       831 ns/op
-
-BenchmarkOPT11111ThriftRead-4   	 3000000	       544 ns/op
-
+markApacheFrameWrite-4      	 1000000	      1952 ns/op
+BenchmarkHzyOPTFrameWrite-4      	 2000000	       783 ns/op
+BenchmarkFmOPTFrameWrite-4       	 2000000	       715 ns/op
+BenchmarkApacheBufferedWrite-4   	 1000000	      1365 ns/op
+BenchmarkFmOptBufferedWrite-4    	 2000000	       697 ns/op
+BenchmarkApacheFrameRead-4       	  500000	      2854 ns/op
+BenchmarkHzyOptFrameRead-4       	 1000000	      1044 ns/op
+BenchmarkFmOPTFrameRead-4        	 2000000	       674 ns/op
+BenchmarkApacheBufferedRead-4    	 5000000	       399 ns/op
+BenchmarkFmOPTBufferedRead-4     	10000000	       193 ns/op
